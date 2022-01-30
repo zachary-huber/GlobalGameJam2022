@@ -9,6 +9,7 @@ func _ready():
 	add_state("inactive")
 	call_deferred("set_state", states.idle)
 
+
 func _input(event):
 	if [states.idle, states.move].has(state):
 		if event.is_action_pressed("ui_up") && parent.is_on_floor():
@@ -17,12 +18,10 @@ func _input(event):
 		if active == true:
 			parent._pauseAndHide()
 		else:
-			parent.cam.make_current()
 			parent._resume()
 		active = !active
 func _state_logic(delta):
 	if state != states.inactive:
-		
 		parent._handle_move_input()
 		parent._apply_gravity(delta)
 		parent._apply_movement()

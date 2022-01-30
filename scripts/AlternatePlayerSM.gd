@@ -18,7 +18,6 @@ func _input(event):
 		if active == true:
 			parent._pauseAndHide()
 		else:
-			parent.cam.make_current()
 			parent._resume()
 		active = !active
 		

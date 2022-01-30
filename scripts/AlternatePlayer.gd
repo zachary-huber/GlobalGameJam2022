@@ -46,3 +46,4 @@ func _pauseAndHide():
 	hide()
 func _resume():
 	show()
+	cam.make_current()

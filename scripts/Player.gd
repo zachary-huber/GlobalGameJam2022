@@ -15,7 +15,7 @@ onready var raycasts = $Raycasts
 onready var anim_player = $Body/CharacterRig/AnimationPlayer
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	cam.make_current()
 	
 func _handle_move_input():
 	var dir = -int(Input.is_action_pressed("ui_left")) + int(Input.is_action_pressed("ui_right"))
@@ -46,3 +46,4 @@ func _pauseAndHide():
 	hide()
 func _resume():
 	show()
+	cam.make_current()
