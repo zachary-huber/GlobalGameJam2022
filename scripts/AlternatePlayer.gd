@@ -10,8 +10,8 @@ var velocity = Vector2.ZERO
 
 var is_jumping
 var is_grounded
-onready var cam = $Camera2D
 onready var raycasts = $Raycasts
+onready var cam = $Camera2D
 onready var anim_player = $Body/CharacterRig/AnimationPlayer
 # Called when the node enters the scene tree for the first time.
 func _ready():

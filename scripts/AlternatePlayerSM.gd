@@ -1,18 +1,19 @@
 extends "res://scripts/StateMachine.gd"
 
-var active = true
+var active = false
 
 func _ready():
 	add_state("idle")
 	add_state("move")
 	add_state("jump")
 	add_state("inactive")
-	call_deferred("set_state", states.idle)
-
+	call_deferred("set_state", states.inactive)
+	parent._pauseAndHide()
 func _input(event):
 	if [states.idle, states.move].has(state):
 		if event.is_action_pressed("ui_up") && parent.is_on_floor():
 			parent.velocity.y = parent.jump_speed
+			
 	if event.is_action_pressed("ui_accept"):
 		if active == true:
 			parent._pauseAndHide()
@@ -20,9 +21,9 @@ func _input(event):
 			parent.cam.make_current()
 			parent._resume()
 		active = !active
+		
 func _state_logic(delta):
 	if state != states.inactive:
-		
 		parent._handle_move_input()
 		parent._apply_gravity(delta)
 		parent._apply_movement()
@@ -37,8 +38,7 @@ func _get_transition(delta):
 							return states.jump
 				elif parent.velocity.x != 0:
 					return states.move
-			else:
-				return states.inactive
+			return states.inactive
 		states.move:
 			if active != false:
 				if !parent.is_on_floor():
@@ -46,8 +46,7 @@ func _get_transition(delta):
 							return states.jump
 				elif parent.velocity.x == 0:
 					return states.idle
-			else:
-				return states.inactive
+			return states.inactive
 		states.jump:
 			if active != false:
 				if parent.is_on_floor():

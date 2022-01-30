@@ -1,7 +1,6 @@
 extends KinematicBody2D
 
 var is_moving_left = true
-
 var gravity = 10
 var velocity = Vector2.ZERO
 onready var raycast = $RayCast2D
@@ -33,8 +32,10 @@ func _on_PlayerDetector_body_entered(body):
 func _on_AttackDetector_body_entered(body):
 	get_tree().reload_current_scene()
 
-
-	
+func _pauseAndHide():
+	hide()
+func _resume():
+	show()
 	
 
 
