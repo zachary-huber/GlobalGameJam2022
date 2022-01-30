@@ -7,7 +7,7 @@ func _ready():
 
 func _input(event):
 	if [states.idle, states.move].has(state):
-		if event.is_action_pressed("ui_up") && parent._check_is_grounded():
+		if event.is_action_pressed("ui_up") && parent.is_on_floor():
 			parent.velocity.y = parent.jump_speed
 
 func _state_logic(delta):
@@ -17,24 +17,24 @@ func _state_logic(delta):
 func _get_transition(delta):
 	match state:
 		states.idle:
-			if !parent._check_is_grounded():
+			if !parent.is_on_floor():
 					if parent.velocity.y < 0 or parent.velocity.y > 0:
 						return states.jump
 			elif parent.velocity.x != 0:
 				return states.move
 		states.move:
-			if !parent._check_is_grounded():
+			if !parent.is_on_floor():
 					if parent.velocity.y < 0 or parent.velocity.y > 0:
 						return states.jump
 			elif parent.velocity.x == 0:
 				return states.idle
 		states.jump:
-			if parent._check_is_grounded():
+			if parent.is_on_floor():
 				return states.idle
 	return null
 
 func _enter_state(new_state, old_state):
-	print(new_state)
+	#print(new_state)
 	match new_state:
 		states.idle:
 			parent.anim_player.play("idle")
